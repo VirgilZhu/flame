@@ -64,4 +64,5 @@ enable_fsdp_float8_all_gather = false
 precompute_float8_dynamic_scale_for_fsdp = false
 
 [activation_checkpoint]
-mode = "none"
+mode = "selective"
+selective_ac_option = "2"
