@@ -184,6 +184,12 @@ class ULSModel(ULSPreTrainedModel):
 
         self.post_init()
 
+        target_dtype = config.torch_dtype
+        if isinstance(target_dtype, str):
+            target_dtype = getattr(torch, target_dtype)
+            
+        self.to(target_dtype)
+
     def get_input_embeddings(self):
         return self.embeddings
 
