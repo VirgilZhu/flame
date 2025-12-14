@@ -65,9 +65,10 @@ path=$(grep -oP '(?<=--job.dump_folder )[^ ]+' <<< "$params")
 steps=$(grep -oP '(?<=--training.steps )[^ ]+' <<< "$params")
 config=$(grep -oP '(?<=--model.config )[^ ]+' <<< "$params")
 tokenizer=$(grep -oP '(?<=--model.tokenizer_path )[^ ]+' <<< "$params")
-model=$(
-  python -c "import fla, sys; from transformers import AutoConfig; print(AutoConfig.from_pretrained(sys.argv[1]).to_json_string())" "$config" | jq -r '.model_type'
-)
+# model=$(
+#   python -c "import fla, sys; from transformers import AutoConfig; print(AutoConfig.from_pretrained(sys.argv[1]).to_json_string())" "$config" | jq -r '.model_type'
+# )
+model=$(python -c "import fla, json, sys; print(json.load(open(sys.argv[1]))['model_type'])" "$config")
 
 mkdir -p $path
 cp * $path
